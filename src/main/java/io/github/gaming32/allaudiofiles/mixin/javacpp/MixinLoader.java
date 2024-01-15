@@ -3,11 +3,12 @@ package io.github.gaming32.allaudiofiles.mixin.javacpp;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
+import com.llamalad7.mixinextras.sugar.Share;
+import com.llamalad7.mixinextras.sugar.ref.LocalBooleanRef;
 import io.github.gaming32.allaudiofiles.CompoundEnumeration;
 import io.github.gaming32.allaudiofiles.JavacppWrapper;
 import org.bytedeco.javacpp.Loader;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -19,9 +20,6 @@ import java.util.Enumeration;
 
 @Mixin(value = Loader.class, remap = false)
 public class MixinLoader {
-    @Unique
-    private static boolean webstreamer$deleteHack;
-
     @WrapOperation(
         method = "extractResource(Ljava/net/URL;Ljava/io/File;Ljava/lang/String;Ljava/lang/String;Z)Ljava/io/File;",
         at = @At(
@@ -30,8 +28,12 @@ public class MixinLoader {
             ordinal = 1
         )
     )
-    private static boolean rememberDeleteResult(File instance, Operation<Boolean> original) {
-        return webstreamer$deleteHack = !original.call(instance) && instance.isFile();
+    private static boolean rememberDeleteResult(
+        File instance, Operation<Boolean> original,
+        @Share("deleteHack") LocalBooleanRef deleteHack
+    ) {
+        deleteHack.set(!original.call(instance) && instance.isFile());
+        return deleteHack.get();
     }
 
     @Inject(
@@ -51,9 +53,10 @@ public class MixinLoader {
         String suffix,
         boolean cacheDirectory,
         CallbackInfoReturnable<File> cir,
-        @Local(ordinal = 1) File file
+        @Local(ordinal = 1) File file,
+        @Share("deleteHack") LocalBooleanRef deleteHack
     ) {
-        if (webstreamer$deleteHack) {
+        if (deleteHack.get()) {
             cir.setReturnValue(file);
         }
     }
