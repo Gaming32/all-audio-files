@@ -43,15 +43,6 @@ public class FfmpegAudioStream extends OggAudioStream {
     }
 
     public static FfmpegAudioStream create(InputStream input, String path) throws FFmpegException, IOException {
-        try {
-            return create1(input, path);
-        } catch (Exception e) {
-            AllAudioFiles.LOGGER.error("Failed to load {}", path, e);
-            throw e;
-        }
-    }
-
-    public static FfmpegAudioStream create1(InputStream input, String path) throws FFmpegException, IOException {
         final FfmpegAudioStream result;
         try {
             result = (FfmpegAudioStream)UnsafeUtil.UNSAFE.allocateInstance(FfmpegAudioStream.class);
