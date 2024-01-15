@@ -87,7 +87,3 @@ tasks.jar {
         rename { "${it}_${base.archivesName.get()}"}
     }
 }
-
-afterEvaluate {
-    println(configurations.runtimeClasspath.get().files.joinToString())
-}
