@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.At;
 
 import static org.bytedeco.ffmpeg.global.avutil.av_get_default_channel_layout;
 
-@Mixin(FFmpegAudioSourceSubstream.class)
+@Mixin(value = FFmpegAudioSourceSubstream.class, remap = false)
 public class MixinFFmpegAudioSourceSubstream {
     @Shadow @Final private int outputChannels;
 
