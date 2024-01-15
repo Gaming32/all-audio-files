@@ -37,8 +37,6 @@ dependencies {
     })
     modImplementation("net.fabricmc:fabric-loader:${project["loader_version"]}")
 
-    modImplementation("net.fabricmc.fabric-api:fabric-api:${project["fabric_version"]}")
-
     include(implementation("com.github.manevolent:ffmpeg4j:5.1.2-1.5.8-4")!!)
     include("org.bytedeco:ffmpeg:5.1.2-1.5.8")
     include("org.bytedeco:javacpp:1.5.8")
