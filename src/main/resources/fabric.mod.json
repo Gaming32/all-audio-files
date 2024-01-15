@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "all-audio-files",
+  "version": "${version}",
+  "name": "All Audio Files",
+  "description": "Allows most audio file formats to be loaded by using ffmpeg instead of stb_vorbis",
+  "authors": [],
+  "contact": {
+    "repo": "https://github.com/Gaming32/all-audio-files"
+  },
+  "license": "MIT",
+  "icon": "assets/all-audio-files/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "io.github.gaming32.allaudiofiles.AllAudioFiles"
+    ]
+  },
+  "mixins": [
+    "all-audio-files.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "minecraft": "${minecraft_version}"
+  }
+}

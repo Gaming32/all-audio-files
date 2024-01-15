@@ -1,0 +1,18 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "io.github.gaming32.allaudiofiles.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "ffmpeg4j.MixinFFmpegAudioSourceSubstream",
+    "javacpp.MixinLoader"
+  ],
+  "client": [
+    "MixinSound",
+    "MixinSoundBufferLibrary",
+    "MixinSoundManager_Preparations"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
