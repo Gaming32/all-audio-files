@@ -17,8 +17,7 @@ public class MixinSound {
     @Inject(method = "getPath", at = @At("HEAD"), cancellable = true)
     private void getPathWithExtension(CallbackInfoReturnable<ResourceLocation> cir) {
         final String pathText = location.getPath();
-        final int dotIndex = pathText.lastIndexOf('.');
-        if (dotIndex != -1) {
+        if (pathText.lastIndexOf('/') < pathText.lastIndexOf('.')) {
             cir.setReturnValue(AllAudioFiles.ALTERNATE_SOUND_LISTER.idToFile(location));
         }
     }
