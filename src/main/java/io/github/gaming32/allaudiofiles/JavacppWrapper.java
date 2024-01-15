@@ -7,9 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UncheckedIOException;
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
-import java.nio.file.FileSystemNotFoundException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -106,13 +104,9 @@ public class JavacppWrapper {
 
     private static Path getLibRoot(Path fsPath) {
         try {
-            return FileSystems.getFileSystem(URI.create("jar:" + fsPath.toUri() + "!/")).getRootDirectories().iterator().next();
-        } catch (FileSystemNotFoundException e) {
-            try {
-                return FileSystems.newFileSystem(fsPath).getRootDirectories().iterator().next();
-            } catch (IOException e1) {
-                throw new UncheckedIOException(e1);
-            }
+            return FileSystems.newFileSystem(fsPath).getRootDirectories().iterator().next();
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
         }
     }
 
